@@ -42,8 +42,13 @@ function App() {
 
   return (
     <>
-      <div className=" bg-amber-200 text-xl lg:text-3xl lg:min-w-[700px] p-4 rounded-4xl shadow-lg shadow-gray-500/50">
-        <div className=" text-5xl my-[30px] font-semibold">Form</div>
+      <div className=" bg-amber-200 text-xl m-2 sm:m-10 lg:text-3xl lg:min-w-[700px] p-4 rounded-4xl shadow-lg shadow-gray-500/50">
+        <div className=" flex justify-center items-center">
+          <div className=" my-[30px]">
+            <p className=" text-5xl  px-4 font-semibold w-fit">Form</p>
+            <div className=" min-h-[3px] bg-black rounded-full"></div>
+          </div>
+        </div>
 
         <form action="submit" onSubmit={handleClick}>
           {/* first name */}
@@ -133,9 +138,18 @@ function App() {
 
           {/* Submit button */}
           <div className=" m-2 p-2">
-            <button className="" type="submit" disabled={loading}>
+            <button className=" mx-5" type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Submit"}
               {/* Button text changes based on loading state */}
+            </button>
+
+            <button
+              type="button" // important to prevent submitting the form
+              className="mx-5 my-2 p-2"
+              onClick={(e) => e.currentTarget.closest("form").reset()}
+              disabled={loading}
+            >
+              {loading ? "Nope..." : "Reset"}
             </button>
           </div>
         </form>
