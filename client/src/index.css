@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -31,6 +30,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
 }
 
 h1 {
@@ -68,4 +69,13 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* index.css or global.css */
+.font-dancing {
+  font-family: "Dancing Script", cursive;
+}
+
+.font-playfair {
+  font-family: "Playfair Display", serif;
 }

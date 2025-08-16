@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 
 async function requestToSend(data) {
   try {
@@ -14,34 +15,39 @@ async function requestToSend(data) {
   }
 }
 
-async function handleClick(e) {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const data = Object.fromEntries(formData.entries());
-  console.log(Object.fromEntries(formData.entries()));
-
-  try {
-    const success = await requestToSend(data);
-
-    if (success) {
-      console.log("Form submission is complete.");
-    } else {
-      console.log("Form submission failed.");
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 function App() {
+  const [loading, setLoading] = useState(false);
+
+  async function handleClick(e) {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const success = await requestToSend(data);
+
+      if (success) {
+        alert("Form submitted successfully!");
+        e.target.reset(); // Reset the form after successful submission
+      } else {
+        alert("Failed to submit form. Please try again.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    setLoading(false);
+  }
+
   return (
     <>
-      <div>
-        <div>Form</div>
+      <div className=" bg-amber-200 text-xl lg:text-3xl lg:min-w-[700px] p-4 rounded-4xl shadow-lg shadow-gray-500/50">
+        <div className=" text-5xl my-[30px] font-semibold">Form</div>
 
         <form action="submit" onSubmit={handleClick}>
           {/* first name */}
-          <div className=" flex flex-row justify-center items-center">
+          <div className=" flex flex-col sm:flex-row sm:justify-between justify-center items-start sm:items-center my-4">
             <label htmlFor="fname" className=" m-2 p-1">
               First Name
             </label>
@@ -57,7 +63,7 @@ function App() {
           </div>
 
           {/* last name */}
-          <div className=" flex flex-row justify-center items-center">
+          <div className=" flex flex-col sm:flex-row sm:justify-between justify-center items-start sm:items-center my-4">
             <label htmlFor="lname" className=" m-2 p-1">
               Last Name
             </label>
@@ -73,7 +79,7 @@ function App() {
           </div>
 
           {/* age */}
-          <div className=" flex flex-row justify-center items-center">
+          <div className=" flex flex-col sm:flex-row sm:justify-between justify-center items-start sm:items-center my-4">
             <label htmlFor="age" className=" m-2 p-1">
               Age
             </label>
@@ -89,7 +95,7 @@ function App() {
           </div>
 
           {/* mail */}
-          <div className=" flex flex-row justify-center items-center">
+          <div className=" flex flex-col sm:flex-row sm:justify-between justify-center items-start sm:items-center my-4">
             <label htmlFor="email" className=" m-2 p-1">
               E-Mail
             </label>
@@ -106,7 +112,7 @@ function App() {
           </div>
 
           {/* relation */}
-          <div className=" flex flex-row justify-center items-center">
+          <div className=" flex flex-col sm:flex-row sm:justify-between justify-center items-start sm:items-center my-4">
             <label htmlFor="relation" className=" m-2 p-1">
               Relation
             </label>
@@ -127,8 +133,9 @@ function App() {
 
           {/* Submit button */}
           <div className=" m-2 p-2">
-            <button className="" type="submit">
-              Submit
+            <button className="" type="submit" disabled={loading}>
+              {loading ? "Submitting..." : "Submit"}
+              {/* Button text changes based on loading state */}
             </button>
           </div>
         </form>
